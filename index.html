@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scientific Calculator</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .calculator {
+      width: 500px; /* Increased width */
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f5f5f5;
+    }
+
+    .calculator input[type="text"] {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 5px;
+      font-size: 32px;
+    }
+
+    .calculator .numbers {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr); /* Five columns */
+      grid-gap: 4px;
+    }
+
+    .calculator .functions {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr); /* Five columns */
+      grid-gap: 4px;
+    }
+
+    .calculator button {
+      width: 100%;
+      padding: 5px;
+      font-size: 32px;
+    }
+</style>
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" id="result" readonly>
+    <div class="functions">
+            <button onclick="calculate('sin(')">sin</button>
+      <button onclick="calculate('cos(')">cos</button>
+      <button onclick="calculate('tan(')">tan</button>
+      <button onclick="calculate('log(')">log</button>
+      <button onclick="calculate('exp(')">exp</button>
+      <button onclick="calculate('v')">Sqrt</button>
+      <button onclick="calculate('²')">Sq</button>
+      <button onclick="calculate('%')">%</button>
+      <button onclick="calculate('p')">p</button>
+      <button onclick="calculate('**')">^</button>
+      <button onclick="calculate('³')">Cub</button>
+      <button onclick="calculate('?')">Cubrt</button>
+      <button onclick="calculate('10**')">10^</button>
+      <button onclick="calculate('ln(')">Ln</button>
+      <button onclick="calculate('factorial(')">n!</button>
+      <button onclick="calculate('1/')">1/x</button>
+      <button onclick="calculate('(')">(</button>
+      <button onclick="calculate(')')">)</button>
+      <button onclick="calculate('e**')">e^x</button>
+      <button onclick="calculate(' ')"> </button>
+      <button onclick="calculate('+')">+</button>
+      <button onclick="calculate('-')">-</button>
+      <button onclick="calculate('/')">/</button>
+      <button onclick="calculate('*')">*</button>
+      <button onclick="backspace()">&#9003;</button>
+    </div>
+  <div class="numbers">
+      <button onclick="calculate('7')">7</button>
+      <button onclick="calculate('8')">8</button>
+      <button onclick="calculate('9')">9</button>
+      <button onclick="calculate('4')">4</button>
+      <button onclick="calculate('5')">5</button>
+      <button onclick="calculate('6')">6</button>
+      <button onclick="calculate('1')">1</button>
+      <button onclick="calculate('2')">2</button>
+      <button onclick="calculate('3')">3</button>
+      <button onclick="calculate('0')">0</button>
+      <button onclick="calculate('.')">.</button>
+      <button onclick="calculate(' ')"> </button>
+      <button onclick="calculate(' ')"> </button>
+      <button onclick="calculate('C')">C</button>
+      <button onclick="calculate('=')">=</button>
+  </div>
+
+  <script>
+    function calculate(value) {
+      var result = document.getElementById('result');
+      if (value === '=') {
+        try {
+          result.value = eval(result.value);
+        } catch (error) {
+          result.value = 'Error';
+        }
+      } else if (value === 'v') {
+        result.value = Math.sqrt(result.value);
+      } else if (value === '²') {
+        result.value = Math.pow(result.value, 2);
+      } else if (value === 'C') {
+        clearResult();
+      } else if (value.startsWith('sin(')) {
+        var angle = result.value;
+        result.value = Math.sin(angle);
+      } else if (value.startsWith('cos(')) {
+        var angle = result.value;
+        result.value = Math.cos(angle);
+      } else if (value.startsWith('tan(')) {
+        var angle = result.value;
+        result.value = Math.tan(angle);
+      } else if (value.startsWith('log(')) {
+        var number = result.value;
+        result.value = Math.log10(number);
+      } else if (value.startsWith('exp(')) {
+        var number= result.value;
+        result.value = Math.exp(number);
+      } else if (value === '%') {
+        result.value = result.value / 100;
+      } else if (value === 'p') {
+        result.value = Math.PI;
+      } else if (value === '**') {
+        result.value = Math.pow(result.value, 3);
+      } else if (value === '?') {
+        result.value = Math.cbrt(result.value);
+      } else if (value === '10**') {
+        result.value = Math.pow(10, result.value);
+      } else if (value.startsWith('ln(')) {
+        var number = result.value;
+        result.value = Math.log(number);
+      } else if (value.startsWith('factorial(')) {
+        var number = result.value;
+        result.value = factorial(number);
+      } else if (value === '1/') {
+        result.value = 1 / result.value;
+      } else if (value === '(') {
+        result.value += '(';
+      } else if (value === ')') {
+        result.value += ')';
+      } else if (value === 'e**') {
+        result.value = Math.exp(result.value);
+      } else {
+        result.value += value;
+      }
+    }
+
+    function backspace() {
+      var result = document.getElementById('result');
+      result.value = result.value.slice(0, -1);
+    }
+
+    function clearResult() {
+      var result = document.getElementById('result');
+      result.value = '';
+    }
+
+    function factorial(n) {
+      if (n === 0 || n === 1) {
+        return 1;
+      } else {
+        return n * factorial(n - 1);
+      }
+    }
+  </script>
+</body>
+</html>
